@@ -17,7 +17,8 @@ class MoviesHorizontalListView extends StatefulWidget {
       this.loadNextPage});
 
   @override
-  State<MoviesHorizontalListView> createState() => _MoviesHorizontalListViewState();
+  State<MoviesHorizontalListView> createState() =>
+      _MoviesHorizontalListViewState();
 }
 
 class _MoviesHorizontalListViewState extends State<MoviesHorizontalListView> {
@@ -30,7 +31,8 @@ class _MoviesHorizontalListViewState extends State<MoviesHorizontalListView> {
     scrollController.addListener(() {
       if (widget.loadNextPage == null) return;
 
-      if ((scrollController.position.pixels + 200) >= scrollController.position.maxScrollExtent) {
+      if ((scrollController.position.pixels + 200) >=
+          scrollController.position.maxScrollExtent) {
         widget.loadNextPage!();
       }
     });
@@ -60,7 +62,8 @@ class _MoviesHorizontalListViewState extends State<MoviesHorizontalListView> {
                 physics: const BouncingScrollPhysics(),
                 scrollDirection: Axis.horizontal,
                 itemBuilder: (context, index) {
-                  return _Slide(movie: widget.movies[index]);
+                  return FadeInRight(
+                      child: _Slide(movie: widget.movies[index]));
                 }),
           )
         ],
@@ -157,12 +160,17 @@ class _Slide extends StatelessWidget {
                   Icons.star_half_outlined,
                   color: Colors.yellow.shade800,
                 ),
-                const SizedBox(width: 3,),
+                const SizedBox(
+                  width: 3,
+                ),
                 Text('${movie.voteAverage}',
                     style: textStyles.bodyMedium
                         ?.copyWith(color: Colors.yellow.shade800)),
                 const Spacer(),
-                Text(HumanFormats.number(movie.popularity), style: textStyles.bodySmall,)
+                Text(
+                  HumanFormats.number(movie.popularity),
+                  style: textStyles.bodySmall,
+                )
               ],
             ),
           )
