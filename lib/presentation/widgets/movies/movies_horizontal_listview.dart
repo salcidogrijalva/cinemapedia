@@ -121,25 +121,28 @@ class _Slide extends StatelessWidget {
           // Image
           SizedBox(
             width: 150,
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(20),
-              child: Image.network(
-                movie.posterPath,
-                fit: BoxFit.cover,
-                width: 150,
-                loadingBuilder: (context, child, loadingProgress) {
-                  if (loadingProgress != null) {
-                    return const Center(
-                        child: CircularProgressIndicator(
-                      strokeAlign: 2,
-                    ));
-                  }
-
-                  return GestureDetector(
-                    onTap: () => context.push('/movie/${movie.id}'),
-                    child: FadeIn(child: child)
-                  );
-                },
+            child: FadeInRight(
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(20),
+                child: Image.network(
+                  movie.posterPath,
+                  fit: BoxFit.cover,
+                  width: 150,
+                  height: 220,
+                  loadingBuilder: (context, child, loadingProgress) {
+                    if (loadingProgress != null) {
+                      return const Center(
+                          child: CircularProgressIndicator(
+                        strokeAlign: 2,
+                      ));
+                    }
+              
+                    return GestureDetector(
+                      onTap: () => context.push('/movie/${movie.id}'),
+                      child: FadeIn(child: child)
+                    );
+                  },
+                ),
               ),
             ),
           ),
