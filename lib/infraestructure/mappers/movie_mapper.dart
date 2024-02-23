@@ -15,7 +15,7 @@ class MovieMapper {
       popularity: movieDB.popularity,
       posterPath: (movieDB.posterPath != '')
           ? 'https://image.tmdb.org/t/p/w500${movieDB.posterPath}'
-          : 'no-poster',
+          : 'https://www.csaff.org/wp-content/uploads/csaff-no-poster.jpg',
       releaseDate: movieDB.releaseDate,
       title: movieDB.title,
       video: movieDB.video,
