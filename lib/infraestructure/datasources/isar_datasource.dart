@@ -4,7 +4,6 @@ import 'package:isar/isar.dart';
 import 'package:path_provider/path_provider.dart';
 
 class IsarDatasource extends LocalStorageDatasource {
-
   late Future<Isar> db;
 
   IsarDatasource() {
@@ -13,13 +12,10 @@ class IsarDatasource extends LocalStorageDatasource {
 
   Future<Isar> openDB() async {
     final dir = await getApplicationDocumentsDirectory();
-    
+
     if (Isar.instanceNames.isEmpty) {
-      return await Isar.open(
-        [MovieSchema],
-        inspector: true, 
-        directory: dir.path
-      );
+      return await Isar.open([MovieSchema],
+          inspector: true, directory: dir.path);
     }
 
     return Future.value(Isar.getInstance());
@@ -28,11 +24,9 @@ class IsarDatasource extends LocalStorageDatasource {
   @override
   Future<bool> isMovieFavorite(int movieId) async {
     final isar = await db;
-    final Movie? isFavorite = await isar.movies
-      .filter()
-      .idEqualTo(movieId)
-      .findFirst();
-    
+    final Movie? isFavorite =
+        await isar.movies.filter().idEqualTo(movieId).findFirst();
+
     return isFavorite != null;
   }
 
@@ -40,27 +34,22 @@ class IsarDatasource extends LocalStorageDatasource {
   Future<List<Movie>> loadMovies({int limit = 10, offset = 0}) async {
     final isar = await db;
 
-    return isar.movies.where()
-      .offset(offset)
-      .limit(limit)
-      .findAll();
+    return isar.movies.where().offset(offset).limit(limit).findAll();
   }
 
   @override
-  Future<void> toggleFavorite(Movie movie) async {
+  Future<bool> toggleFavorite(Movie movie) async {
     final isar = await db;
 
-    final favoriteMovie = await isar.movies
-      .filter()
-      .idEqualTo(movie.id)
-      .findFirst();
-    
-    if(favoriteMovie != null) {
+    final favoriteMovie =
+        await isar.movies.filter().idEqualTo(movie.id).findFirst();
+
+    if (favoriteMovie != null) {
       isar.writeTxnSync(() => isar.movies.deleteSync(favoriteMovie.isarId!));
-      return;
+      return false;
     }
 
     isar.writeTxnSync(() => isar.movies.putSync(movie));
+    return true;
   }
-
 }

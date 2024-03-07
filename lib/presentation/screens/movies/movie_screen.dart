@@ -115,7 +115,8 @@ class _MovieDetails extends StatelessWidget {
   }
 }
 
-final isFavoriteProvider = FutureProvider.family.autoDispose((ref, int movieId) {
+final isFavoriteProvider =
+    FutureProvider.family.autoDispose((ref, int movieId) {
   final localStorageRepository = ref.watch(localStorageProvider);
 
   return localStorageRepository.isMovieFavorite(movieId);
@@ -137,19 +138,23 @@ class _CustomSliverAppBar extends ConsumerWidget {
       foregroundColor: Colors.white,
       actions: [
         IconButton(
-          onPressed: () {
-            ref.watch(localStorageProvider).toggleFavorite(movie);
+            onPressed: () async {
+              // ref.read(localStorageProvider).toggleFavorite(movie);
+              await ref
+                  .read(favoriteMoviesProvider.notifier)
+                  .toggleFavorite(movie);
 
-            ref.invalidate(isFavoriteProvider(movie.id));
-          }, 
-          icon: isFavoriteFuture.when(
-            data: (isFavorite) => isFavorite
-              ? const Icon(Icons.favorite_rounded, color: Colors.red,)
-              : const Icon(Icons.favorite_border), 
-            error: (_, __) => const Icon(Icons.favorite_border), 
-            loading: () => const Icon(Icons.favorite_border)
-          ) 
-        )
+              ref.invalidate(isFavoriteProvider(movie.id));
+            },
+            icon: isFavoriteFuture.when(
+                data: (isFavorite) => isFavorite
+                    ? const Icon(
+                        Icons.favorite_rounded,
+                        color: Colors.red,
+                      )
+                    : const Icon(Icons.favorite_border),
+                error: (_, __) => const Icon(Icons.favorite_border),
+                loading: () => const Icon(Icons.favorite_border)))
       ],
       flexibleSpace: FlexibleSpaceBar(
         titlePadding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
@@ -174,25 +179,22 @@ class _CustomSliverAppBar extends ConsumerWidget {
             ),
             // Gradient for end of image
             const _CustomGradient(
-              begin: Alignment.topCenter, 
-              end: Alignment.bottomCenter, 
-              stops: [0.8, 1.0], 
-              colors: [Colors.transparent, Colors.black54]
-            ),
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                stops: [0.8, 1.0],
+                colors: [Colors.transparent, Colors.black54]),
             //Gradient for favorite button
             const _CustomGradient(
-              begin: Alignment.topRight, 
-              end: Alignment.bottomLeft, 
-              stops: [0.0, 0.2], 
-              colors: [Colors.black54, Colors.transparent]
-            ),
+                begin: Alignment.topRight,
+                end: Alignment.bottomLeft,
+                stops: [0.0, 0.2],
+                colors: [Colors.black54, Colors.transparent]),
             // Gradient for back button
             const _CustomGradient(
-              begin: Alignment.topLeft, 
-              end: Alignment.bottomLeft, 
-              stops: [0.0, 0.2], 
-              colors: [Colors.black54, Colors.transparent]
-            ),
+                begin: Alignment.topLeft,
+                end: Alignment.bottomLeft,
+                stops: [0.0, 0.2],
+                colors: [Colors.black54, Colors.transparent]),
           ],
         ),
       ),
@@ -205,24 +207,21 @@ class _CustomGradient extends StatelessWidget {
   final AlignmentGeometry end;
   final List<double> stops;
   final List<Color> colors;
-  
+
   const _CustomGradient({
-    required this.begin, required this.end, required this.stops, required this.colors,
+    required this.begin,
+    required this.end,
+    required this.stops,
+    required this.colors,
   });
 
   @override
   Widget build(BuildContext context) {
     return SizedBox.expand(
       child: DecoratedBox(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: begin,
-            end: end,
-            stops: stops,
-            colors: colors
-          )
-        )
-      ),
+          decoration: BoxDecoration(
+              gradient: LinearGradient(
+                  begin: begin, end: end, stops: stops, colors: colors))),
     );
   }
 }
