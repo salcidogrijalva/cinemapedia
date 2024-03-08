@@ -6,9 +6,16 @@ With Cinemapedia you'll be able to find info about thousands and thousands of mo
 Discover every detail about upcoming movies, set movies as favorites so you always have their info at the palm of your hand.
 
 ## Screenshots
-
-!Captura de Pantalla 1
-!Captura de Pantalla 2
+Check what's new, what's upcoming, what's the best
+![Check what's new, what's upcoming, what's the best](https://raw.githubusercontent.com/salcidogrijalva/cinemapedia/main/images/1.png)
+Always know every detail about a movie
+![Always know every detail about a movie](https://raw.githubusercontent.com/salcidogrijalva/cinemapedia/main/images/2.png)
+Know about everyone involved in a movie
+![Actors in the movie](https://raw.githubusercontent.com/salcidogrijalva/cinemapedia/main/images/3.png)
+All of your favorite movies
+![All of your favorite movies](https://raw.githubusercontent.com/salcidogrijalva/cinemapedia/main/images/4.png)
+Search for any movie you want
+![Search for any movie you want](https://raw.githubusercontent.com/salcidogrijalva/cinemapedia/main/images/5.png)
 
 ## Installation
 
